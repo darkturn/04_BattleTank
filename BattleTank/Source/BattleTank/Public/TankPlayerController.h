@@ -28,4 +28,7 @@ ATank* GetControlledTank() const;
 //Muove il barrel del tank in modo che segua la posizione del mirino
 void AimTowardsCrosshair();
 
+//Ritorna un OUT parameter, vero se colpisce il landscape
+bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+
 };

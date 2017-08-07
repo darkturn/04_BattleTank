@@ -30,9 +30,19 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
-	//ottenere la posizione di dove punta il mirino
-	//Se colpisce il landscape
-		//Far mirare il tank controllato a questo punto
+	
+	FVector OutHitLocation; //OUT Parameter
+	if (GetSightRayHitLocation(OutHitLocation)) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hai colpito:"), *OutHitLocation.ToString())
+		// TODO Far mirare il tank controllato a questo punto
+	}
+}
+//ottenere la posizione di dove punta il mirino, vero se colpisce il landscape
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	OutHitLocation = FVector(1.0);
+	return true;
 }
 
 
