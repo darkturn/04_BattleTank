@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -31,15 +32,15 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 	
-	FVector OutHitLocation; //OUT Parameter
-	if (GetSightRayHitLocation(OutHitLocation)) 
+	FVector HitLocation; //OUT Parameter
+	if (GetSightRayHitLocation(HitLocation)) 
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Direzione mirino: %s"), *OutHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Punto colpito col mirino: %s"), *HitLocation.ToString())
 		// TODO Far mirare il tank controllato a questo punto
 	}
 }
 //ottenere la posizione di dove punta il mirino, vero se colpisce il landscape
-bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	//Trovare la direzione del mirino
 	int32 ViewportSizeX, ViewportSizeY;
@@ -50,11 +51,28 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Direzione mirino: %s"), *LookDirection.ToString())
+		//Line-trace su LookDirection, e vedere cosa colpisce
+		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
-	
-	//Line-trace su LookDirection, e vedere cosa colpisce
 	return true;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility)
+		) 
+	{
+		HitLocation = HitResult.Location;
+		return true; //tracciamento riuscito
+	}
+	return false; //Tracciamento non riuscito
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const

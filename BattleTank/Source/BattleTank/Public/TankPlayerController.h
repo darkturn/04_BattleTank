@@ -29,7 +29,7 @@ ATank* GetControlledTank() const;
 void AimTowardsCrosshair();
 
 //Ritorna un OUT parameter, vero se colpisce il landscape
-bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 UPROPERTY(EditAnywhere)
 float CrossHairXLocation = 0.5;
@@ -37,6 +37,11 @@ float CrossHairXLocation = 0.5;
 UPROPERTY(EditAnywhere)
 float CrossHairYLocation = 0.3333;
 
+UPROPERTY(EditAnywhere)
+float LineTraceRange = 1000000;
+
 bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
 };
