@@ -34,7 +34,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation; //OUT Parameter
 	if (GetSightRayHitLocation(OutHitLocation)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Direzione mirino:"), *OutHitLocation.ToString())
+		//UE_LOG(LogTemp, Warning, TEXT("Direzione mirino: %s"), *OutHitLocation.ToString())
 		// TODO Far mirare il tank controllato a questo punto
 	}
 }
@@ -47,9 +47,25 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	//"deprogettare" la posizione del mirino sullo schermo in una direzione del mondo
-	//Line-trace su quella direzione, e vedere cosa colpisce
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection)) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Direzione mirino: %s"), *LookDirection.ToString())
+	}
+	
+	//Line-trace su LookDirection, e vedere cosa colpisce
 	return true;
 }
 
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector CameraWorldLocation; //da togliere
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X,
+		ScreenLocation.Y,
+		CameraWorldLocation,
+		LookDirection
+	);
+}
 
 
