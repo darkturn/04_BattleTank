@@ -35,8 +35,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; //OUT Parameter
 	if (GetSightRayHitLocation(HitLocation)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Punto colpito col mirino: %s"), *HitLocation.ToString())
-		// TODO Far mirare il tank controllato a questo punto
+		//AimAt è in tank.h
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 //ottenere la posizione di dove punta il mirino, vero se colpisce il landscape
