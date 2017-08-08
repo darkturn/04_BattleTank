@@ -34,14 +34,20 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation; //OUT Parameter
 	if (GetSightRayHitLocation(OutHitLocation)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hai colpito:"), *OutHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Direzione mirino:"), *OutHitLocation.ToString())
 		// TODO Far mirare il tank controllato a questo punto
 	}
 }
 //ottenere la posizione di dove punta il mirino, vero se colpisce il landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-	OutHitLocation = FVector(1.0);
+	//Trovare la direzione del mirino
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+
+	//"deprogettare" la posizione del mirino sullo schermo in una direzione del mondo
+	//Line-trace su quella direzione, e vedere cosa colpisce
 	return true;
 }
 
