@@ -23,10 +23,11 @@ virtual void BeginPlay() override;
 
 virtual void Tick(float DeltaTime) override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
+
 private:
-
-ATank* GetControlledTank() const;
-
 //Muove il barrel del tank in modo che segua la posizione del mirino
 void AimTowardsCrosshair();
 
