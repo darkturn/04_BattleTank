@@ -8,6 +8,7 @@
 
 //forward declaration
 class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -26,6 +27,9 @@ virtual void Tick(float DeltaTime) override;
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 //Muove il barrel del tank in modo che segua la posizione del mirino
