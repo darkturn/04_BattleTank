@@ -11,7 +11,6 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -24,9 +23,6 @@ class BATTLETANK_API ATank : public APawn
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:
 	void AimAt(FVector HitLocation);
@@ -41,6 +37,7 @@ private:
 	// Sets default values for this pawn's properties
 	ATank();
 	
+	//TODO rimuovere quando il firing è spostato all'aim
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
