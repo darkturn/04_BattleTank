@@ -20,6 +20,8 @@ virtual void Tick(float DeltaTime) override;
 
 virtual void BeginPlay() override;
 
-private:
-	float AcceptanceRadius = 3000;
+protected:
+	//Quanto vicino può venire un tank nemico
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000;
 };
