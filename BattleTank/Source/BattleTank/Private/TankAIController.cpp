@@ -37,7 +37,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 
-	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	if (!PlayerTank && !ControlledTank) { return; }
 	
 		//Muoversi verso il giocatore
 		MoveToActor(PlayerTank, AcceptanceRadius);
