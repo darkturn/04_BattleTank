@@ -19,14 +19,15 @@ void ATankAIController::SetPawn(APawn* InPawn)
 		auto PossessedTank = Cast<ATank>(InPawn);
 		if (!PossessedTank) { return; }
 		
-		//Iscrivere il metodo locale all'evento della morte del tank
+		//Iscrivere il metodo locale all'evento della morte de l tank
 		PossessedTank->OnDeath.AddUObject(this, &ATankAIController::OnPossessedTankDeath);
 	}
 }
 
 void ATankAIController::OnPossessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Suino"))
+	if (!GetPawn()) { return; }
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 void ATankAIController::Tick(float DeltaTime)

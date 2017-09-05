@@ -21,11 +21,16 @@ public:
 
 virtual void BeginPlay() override;
 
+void SetPawn(APawn * InPawn);
+
 virtual void Tick(float DeltaTime) override;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+	
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 private:
 //Muove il barrel del tank in modo che segua la posizione del mirino
