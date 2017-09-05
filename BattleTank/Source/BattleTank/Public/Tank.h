@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -19,6 +21,8 @@ public:
 	//Mostra la vita corrente come percentuale della vita iniziale, tra 0 e 1
 	UFUNCTION(BlueprintPure,  Category = "Health")
 	float GetHealthPercent() const;
+
+	FTankDelegate OnDeath;
 
 private:
 	// Sets default values for this pawn's properties

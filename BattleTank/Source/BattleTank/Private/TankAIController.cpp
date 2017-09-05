@@ -3,11 +3,30 @@
 #include "TankAIController.h"
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
+#include "Tank.h" //Per poter implementare OnDeath
 //Dipende dal movement component via pathfinding
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!PossessedTank) { return; }
+		
+		//Iscrivere il metodo locale all'evento della morte del tank
+		PossessedTank->OnDeath.AddUObject(this, &ATankAIController::OnPossessedTankDeath);
+	}
+}
+
+void ATankAIController::OnPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Suino"))
 }
 
 void ATankAIController::Tick(float DeltaTime)

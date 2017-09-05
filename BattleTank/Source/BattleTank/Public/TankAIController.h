@@ -14,11 +14,16 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
-// Called every frame
-virtual void Tick(float DeltaTime) override;
+private:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
-virtual void BeginPlay() override;
+	virtual void SetPawn(APawn* InPawn) override;
+
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 protected:
 	//Quanto vicino può venire un tank nemico
